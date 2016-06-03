@@ -1,0 +1,85 @@
+<form method=post action=/logout>
+<input class="logout"type=submit value="Logout">
+</form>
+<div id="nav_container">
+  <nav>
+    <span>Home</span>
+    <span>My Questions</span>
+    <span>My Answers</span>
+
+    
+  </nav>
+  <div id="selector">
+    <div id="shape"></div>
+  </div>
+</div>
+	
+
+<div class="home_headings">
+
+	<div class="home_headers">
+		<h1> Welcome to <b>Quora</b> <%=current_user.username%></h1>
+		<h3> Ask any question and get the best answers </h3>
+
+		<form class="form-wrapper cf" method=post action=/question>	
+			<input type="text" placeholder="Type your question here" name="subject">
+			<button type="submit">Ask</button>
+		</form>
+	</div>
+</div>
+
+<div class="questions_answers">
+
+	<table>
+	  <tr >
+	    <th>Questions</th>
+	    <th>Answers</th>		
+	    <th>Question Votes</th>
+	    <th>Edit/Delete</th>
+	  </tr>
+
+
+	 <% @questions.each do |question| %>
+		
+		 <tr>
+			 <td><%= question.subject %> by <%= question.user.username%>
+			 <form class="answer" method="post" action="/questions/<%= question.id %>/answer">
+				<input type="text" placeholder="Type your answer here" name="body">
+				<button type="submit" >Answer</button>
+			</form>	
+			</td>
+
+		<td>
+			<table>
+		 		<% question.answers.each do |answer|%>
+		 		<tr><td><%= answer.body%> by <%=answer.user.username%></td></tr>
+		 		<%end%> 
+		 	</table>
+			 <td> <form class="answer" method="post" action="/questions/<%= question.id %>/vote">
+		 		  	<input type ="hidden" name="vote" value="Upvote">
+		 		 	 <button type="submit" >Upvote</button><%=@upvote_count%>
+				  </form>
+				 <form class="answer" method="post" action="/questions/<%= question.id %>/vote">
+		 			<input type ="hidden" name="vote" value="Downvote">
+		 	   	    <button type="submit" >Downvote</button><%=@downvote_count%>
+		    	 </form>
+		  	 </td>
+		  
+				<%end%>
+				<td>
+			
+					  <button type="submit">Edit</button>
+			
+
+				<form action="/question" method="post">
+					  <input type="hidden" name="_method" value="DELETE">
+					  <input type="submit" value="Delete">
+				</form>
+			</td>
+			
+	</table>
+	<%=@message%>
+
+<br> <br>
+</div>
+

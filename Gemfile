@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
-
+gem 'byebug'
+gem 'bcrypt', '~> 3.1.7'
 # Ruby Version
 # ruby "2.2.1"
 
